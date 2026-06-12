@@ -1,0 +1,47 @@
+How to Use
+
+local repo = 'https://raw.githubusercontent.com/yourname/yourrepo/main/'
+
+local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
+local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
+local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
+
+local Window = Library:CreateWindow({
+    Title = 'UNDETEK II',
+    Center = true,
+    AutoShow = true
+})
+
+-- ... create your UI ...
+
+-- Setup addons
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({ 'MenuKeybind' })
+ThemeManager:SetFolder('MyScriptHub')
+SaveManager:SetFolder('MyScriptHub/specific-game')
+
+SaveManager:BuildConfigSection(Tabs['UI Settings'])
+ThemeManager:ApplyToTab(Tabs['UI Settings'])
+SaveManager:LoadAutoloadConfig()
+All Available Elements
+Table
+Element	Style	Usage
+AddToggle	Label left, On/Off green/red right	Groupbox:AddToggle('Name', {Text='Aimbot', Default=true})
+AddSlider	Label left, blue number right	Groupbox:AddSlider('Name', {Text='Smooth', Default=65, Min=0, Max=100})
+AddButton	Orange highlighted row	Groupbox:AddButton({Text='Theme', Func=function() end})
+AddInput	Text input box	Groupbox:AddInput('Name', {Text='Message', Placeholder='Type...'})
+AddDropdown	Dropdown list	Groupbox:AddDropdown('Name', {Values={'A','B'}, Default=1})
+AddLabel	Plain text label	Groupbox:AddLabel('Text')
+AddDivider	Horizontal line	Groupbox:AddDivider()
+AddDependencyBox	Conditional visibility	local Dep = Groupbox:AddDependencyBox()
+AddTabbox	Sub-tabs inside groupbox	local TabBox = Groupbox:AddTabbox()
+Attachments:
+Toggle:AddKeyPicker() — Keybind in blue
+Toggle:AddColorPicker() — Color picker
+Label:AddKeyPicker() — Keybind on label
+Label:AddColorPicker() — Color picker on label
+Addons:
+SaveManager:BuildConfigSection(tab) — Save/load configs
+ThemeManager:ApplyToTab(tab) — Theme customization
