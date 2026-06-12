@@ -1,14 +1,11 @@
 -- ============================================
--- UNDETEK II - Complete Example with Addons
+-- UNDETEK II - Complete Example
+-- Uses: https://github.com/cabscer/undetek-Lib
 -- ============================================
 
--- Replace these with your actual raw GitHub/raw links
-local repo = 'https://raw.githubusercontent.com/yourname/yourrepo/main/'
+local repo = 'https://raw.githubusercontent.com/cabscer/undetek-Lib/main/'
 
--- Load the UNDETEK II styled library
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
-
--- Load addons (SaveManager & ThemeManager)
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
 local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
 
@@ -41,6 +38,7 @@ local Tabs = {
 
 local CombatLeft = Tabs.Main:AddLeftGroupbox('Aimbot')
 
+-- Toggle: Shows "On" in green / "Off" in red on the right
 CombatLeft:AddToggle('Aimbot', {
     Text = 'Aimbot',
     Default = true,
@@ -50,6 +48,7 @@ CombatLeft:AddToggle('Aimbot', {
     end
 })
 
+-- KeyPicker attached to toggle: Shows key in blue
 Toggles.Aimbot:AddKeyPicker('AimbotKey', {
     Default = 'MB2',
     SyncToggleState = false,
@@ -61,6 +60,7 @@ Toggles.Aimbot:AddKeyPicker('AimbotKey', {
     end
 })
 
+-- Slider: Label on left, value in blue on right
 CombatLeft:AddSlider('Smoothness', {
     Text = 'Smooth',
     Default = 65,
@@ -198,6 +198,7 @@ VisualsLeft:AddToggle('SkeletonESP', {
     end
 })
 
+-- Color picker attached to label
 VisualsLeft:AddLabel('Box Color'):AddColorPicker('BoxColor', {
     Default = Color3.new(1, 0, 0),
     Title = 'Box Color',
@@ -279,6 +280,7 @@ MiscLeft:AddToggle('BHop', {
 
 local MiscRight = Tabs.Misc:AddRightGroupbox('Other')
 
+-- Button: Orange highlighted row
 MiscRight:AddButton('Rejoin', {
     Text = 'Rejoin Server',
     Func = function()
@@ -409,30 +411,15 @@ Library.ToggleKeybind = Options.MenuKeybind
 -- ADDONS SETUP
 -- ============================================
 
--- Hand the library over to our managers
 ThemeManager:SetLibrary(Library)
 SaveManager:SetLibrary(Library)
-
--- Ignore keys that are used by ThemeManager
 SaveManager:IgnoreThemeSettings()
-
--- Adds our MenuKeybind to the ignore list
 SaveManager:SetIgnoreIndexes({ 'MenuKeybind' })
-
--- use case for doing it this way:
--- a script hub could have themes in a global folder
--- and game configs in a separate folder per game
 ThemeManager:SetFolder('MyScriptHub')
 SaveManager:SetFolder('MyScriptHub/specific-game')
 
--- Builds our config menu on the right side of our tab
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
-
--- Builds our theme menu (with plenty of built in themes) on the left side
 ThemeManager:ApplyToTab(Tabs['UI Settings'])
-
--- You can use the SaveManager:LoadAutoloadConfig() to load a config
--- which has been marked to be one that auto loads!
 SaveManager:LoadAutoloadConfig()
 
 -- ============================================
@@ -467,26 +454,17 @@ Library:OnUnload(function()
 end)
 
 -- ============================================
--- ACCESSING VALUES PROGRAMMATICALLY
+-- ACCESSING VALUES
 -- ============================================
 
--- Toggles
 -- Toggles.Aimbot.Value              -> true/false
 -- Toggles.Aimbot:SetValue(false)    -> turn off
-
--- Options
 -- Options.Smoothness.Value          -> 65
 -- Options.Smoothness:SetValue(80)   -> set to 80
-
--- Keybinds
 -- Options.AimbotKey.Value           -> "MB2"
 -- Options.AimbotKey:GetState()      -> true/false
-
--- Dropdowns
 -- Options.ThemeSelect.Value         -> "Default"
 -- Options.MultiSelect.Value         -> { OptionA = true, OptionB = false }
-
--- ColorPickers
 -- Options.BoxColor.Value            -> Color3
 -- Options.BoxColor.Transparency     -> 0
 
